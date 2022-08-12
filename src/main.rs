@@ -1,4 +1,4 @@
-use gdk_pixbuf::{InterpType, Pixbuf};
+use gdk_pixbuf::Pixbuf;
 use gio::MemoryInputStream;
 use glib::Bytes;
 use gtk::prelude::*;
@@ -21,11 +21,9 @@ fn main() {
         let image_data = include_bytes!("./resources/Chess_blt45.svg");
         let image_data = Bytes::from(image_data);
         let image_stream = MemoryInputStream::from_bytes(&image_data);
-        let pixbuf = Pixbuf::from_stream(&image_stream, None::<&gio::Cancellable>)
-            .expect("Failed to create stream for image.");
-        let pixbuf = pixbuf
-            .scale_simple(140, 140, InterpType::Bilinear)
-            .expect("Failed to resize the image.");
+        let pixbuf =
+            Pixbuf::from_stream_at_scale(&image_stream, 140, 140, true, None::<&gio::Cancellable>)
+                .expect("Failed to interpret image.");
         let drawing_area = DrawingArea::new();
         drawing_area.connect_draw(move |_drawing_area, cx| {
             cx.set_source_rgb(0.3, 0.3, 0.3);
