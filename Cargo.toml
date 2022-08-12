@@ -6,4 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+gdk-pixbuf = "0.15.11"
+gio = "0.15.12"
+glib = "0.15.12"
 gtk = "0.15.5"

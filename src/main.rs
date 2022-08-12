@@ -1,5 +1,8 @@
-use gtk::DrawingArea;
+use gdk_pixbuf::Pixbuf;
+use gio::MemoryInputStream;
+use glib::Bytes;
 use gtk::prelude::*;
+use gtk::DrawingArea;
 use gtk::{Application, ApplicationWindow};
 
 fn main() {
@@ -15,11 +18,20 @@ fn main() {
             .title("Basic Chess Endgames")
             .build();
 
+        let image_data = include_bytes!("./resources/Chess_blt45.svg");
+        let image_data = Bytes::from(image_data);
+        let image_stream = MemoryInputStream::from_bytes(&image_data);
+        let pixbuf = Pixbuf::from_stream(&image_stream,  None::<&gio::Cancellable>)
+            .expect("Failed to create stream for image.");
         let drawing_area = DrawingArea::new();
-        drawing_area.connect_draw(|_drawing_area, cx| {
+        drawing_area.connect_draw(move |_drawing_area, cx| {
             cx.set_source_rgb(0.3, 0.3, 0.3);
             cx.rectangle(0.0, 0.0, 400.0, 400.0);
             cx.fill().expect("Failed to fill context");
+
+            cx.set_source_pixbuf(&pixbuf, 0.0, 0.0);
+            cx.paint().expect("Failed to draw image.");
+
             Inhibit(false)
         });
         win.add(&drawing_area);
