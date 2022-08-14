@@ -13,7 +13,7 @@ pub struct PiecesImages {
 
 impl PiecesImages {
     pub fn new(size: i32) -> Self {
-        let cells_size = (size as f64 * 0.111).ceil() as i32;
+        let cells_size = (size as f64 * 0.111) as i32;
         let streams = PiecesImages::build_streams();
         let pixbufs = PiecesImages::build_pixbufs(&streams, cells_size);
 

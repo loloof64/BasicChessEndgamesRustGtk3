@@ -16,9 +16,9 @@ impl Painter {
         cx.fill().unwrap();
     }
 
-    pub fn draw_piece(cx: &Context, pixbuf: &Pixbuf) {
-        cx.set_source_pixbuf(&pixbuf, 30.0, 50.0);
-        cx.paint().expect("Failed to draw image.");
+    pub fn draw_piece(cx: &Context, pixbuf: &Pixbuf, x: f64, y: f64) {
+        cx.set_source_pixbuf(&pixbuf, x, y);
+        cx.paint().unwrap();
     }
 
     pub fn draw_cells(cx: &Context, board: &ChessBoard) {
